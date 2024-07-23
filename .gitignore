@@ -1,0 +1,15 @@
+/build/
+/.clj-kondo/
+/.cpcache/
+/.lsp/
+/database.db
+/junit.xml
+/target/
+/closure.dylib
+/closure.dylib.dSYM/
+/source/.idea/
+/uuid.dylib
+/uuid.dylib.dSYM/
+/closure.so
+/uuid.so
+/.nrepl-port
