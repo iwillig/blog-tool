@@ -7,8 +7,8 @@ PRAGMA foreign_keys = ON;
 select load_extension('./uuid');
 select load_extension('./closure');
 
+begin transaction;
 
-BEGIN TRANSACTION;
 
 insert into author (id, name, author_email)
 values (1, 'ivan', 'ivan@example.com')
@@ -26,4 +26,4 @@ returning *;
 
 
 
-COMMIT;
+commit;

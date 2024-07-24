@@ -66,6 +66,12 @@ clean:
 
 rebuild-db: clean $(DATABASE_FILE)
 
+watch-db:
+	watchman-make -p database_example.sql database_schema.sql 'Makefile' -t rebuild-db
+
+watch-tests:
+	watchman-make -p database_example.sql database_schema.sql **/*.clj src/**/*.clj test/**/*.clj 'Makefile' -t tests
+
 doc-api:
 	clojure -X:codox
 
@@ -82,6 +88,9 @@ lint: clj-lint
 tests: $(DATABASE_FILE)
 	clojure -M:tests
 
+repl: $(DATABASE_FILE)
+	clojure -M:rebel
+
 check: outdated tests
 
-.PHONY: help Makefile clean check clj-lint lint outdated tests doc-api rebuild-db
+.PHONY: help Makefile clean check clj-lint lint outdated tests doc-api rebuild-db watch-db watch-tests
