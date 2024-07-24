@@ -1,10 +1,26 @@
 # Blog Tool
 
-A simple and easy blogging tool.
+A simple and easy hypermedia blogging tool.
 
 Built using Clojure, SQLite3 and htmlx
 
+## Clojure development
+
+Load a REPL how you do normally. You can use `make repl` if you don't
+have a preferred way of starting a REPL.
+
+Then compile all the namespaces.
+
+```clojure
+user> (dev)
+
+dev> (reload/reload)
+
+dev> (k/run-all)
+```
+
 ## Tests
+Run the tests via the command line.
 
 ```shell
 make check

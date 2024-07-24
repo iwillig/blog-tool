@@ -1,21 +1,25 @@
 (ns blog-tool.routes
   (:require
+   [blog-tool.templates :as templates]
    [ring.middleware.json :as json]
    [ring.middleware.params :as ring.params]
+   [rum.core :as rum]
    [reitit.ring :as ring]
    [liberator.core :as liberator]))
 
 (def available-media-type
   ["text/html"])
 
-(def ping
+(def index
   (liberator/resource
    :available-media-types available-media-type
-   :handle-ok "pong"))
+   :handle-ok (fn [_request]
+                (rum/render-static-markup
+                 (templates/my-comp "hello")))))
 
 (defn routes
   []
-  [["/" ping]])
+  [["/" index]])
 
 
 (defn router

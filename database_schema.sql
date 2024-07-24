@@ -3,7 +3,8 @@ PRAGMA foreign_keys = ON;
 select load_extension('./uuid');
 select load_extension('./closure');
 
-create table author (
+
+create table if not exists author (
        id integer primary key,
        created_at datetime default (datetime('now')) not null,
        last_updated_at datetime default (datetime('now')) not null,
