@@ -1,0 +1,8 @@
+{
+ :linters {:unresolved-symbol {:level :error
+                               :exclude [;; ignore globally:
+
+                                         (clojure.test/are [thrown? thrown-with-msg?])
+                                         (cljs.test/are [thrown? thrown-with-msg?])
+                                         (clojure.test/is [thrown? thrown-with-msg?])
+                                         (cljs.test/is [thrown? thrown-with-msg?])]}}}

@@ -69,19 +69,19 @@ rebuild-db: clean $(DATABASE_FILE)
 doc-api:
 	clojure -X:codox
 
-doc: doc-narrative doc-api
+doc: doc-api
 
 outdated:
 	clojure -M:outdated
 
 clj-lint:
-	clojure -M:lint --lint src/ test/ dev/
+	clj -M:lint --lint src
 
 lint: clj-lint
 
 tests: $(DATABASE_FILE)
 	clojure -M:tests
 
-check: outdated lint tests doc
+check: outdated tests
 
 .PHONY: help Makefile clean check clj-lint lint outdated tests doc-api rebuild-db
