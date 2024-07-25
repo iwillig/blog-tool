@@ -34,7 +34,7 @@ create table if not exists article (
 
 create table if not exists article_tag (
        id integer primary key asc,
-       article_id integer references post,
+       article_id integer references article(id),
        tag_id integer references tag
 );
 
@@ -47,7 +47,7 @@ create table if not exists comment (
        public_id uuid unique default (uuid()) not null,
 
        content text,
-       article_id integer references post,
+       article_id integer references article(id),
        parent_id integer references comment,
        author_id integer references author
 );

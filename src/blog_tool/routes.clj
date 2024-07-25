@@ -22,31 +22,38 @@
 (def admin
   (liberator/resource
    :available-media-types available-media-type
-   :handle-ok (fn [_request]
+   :handle-ok (fn [ctx]
                 (rum/render-static-markup
                  [:html {:lang "en"}
                   [:head
                    [:script {:src "https://unpkg.com/htmx.org@2.0.1"}]]
-                  [:body [:div [:h1 "blog tools"]]]]))))
+                  [:body
+                   [:div [:h1 "blog tools"]
+                    (templates/article-form ctx)]]]))))
 
 (def articles
   (liberator/resource
    :allowed-methods [:post :get]
    :available-media-types available-media-type
 
-   :malformed? (fn [_ctx]
-                 false)
+   ;; :malformed? (fn [_ctx]
+   ;;               false)
 
    :post! (fn [ctx]
-            (clojure.pprint/pprint (:request ctx)))
 
-   :handle-created (fn [ctx] "created-post")
-   :handle-ok (fn [ctx] "list-post")))
+            {})
+
+   :handle-created (fn [ctx]
+                     "created-post")
+
+   :handle-ok (fn [ctx]
+                "list-post")))
 
 (def article
   (liberator/resource
 
    :allowed-methods [:get :patch :delete]
+
    :respond-with-entity? true
    :can-put-to-missing? false
 
@@ -79,9 +86,8 @@
   [["/"                   {:name :index :handler index}]
    ["/admin"              {:name :admin :handler admin}]
 
-
-   ["/api/article"          {:name :posts :handler articles}]
-   ["/api/article/:article-id" {:name :post  :handler article}]
+   ["/api/articles"             {:name :posts :handler articles}]
+   ["/api/articles/:article-id" {:name :post  :handler article}]
 
    ["/api/comments"             {:name :comments :handler comments}]
    ["/api/comments/:comment-id" {:name :comment :handler comment}]])
@@ -92,10 +98,14 @@
 
 (def app
   (-> (router)
-      (ring/ring-handler)
+      (ring/ring-handler
+       (ring/create-default-handler))
       (ring.params/wrap-params)
       (json/wrap-json-body {:keywords? true})))
 
 
 (defn run-dev [& _args]
-  (run-jetty (wrap-reload #'app) {:port 3000}))
+  (run-jetty
+
+   (wrap-reload #'app)
+   {:port 3000}))

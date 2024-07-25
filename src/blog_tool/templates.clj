@@ -10,9 +10,21 @@
 (rum/defc article-link [post]
   [:a {:href ""}])
 
-(rum/defc article-form []
-  [:form {:action "/posts" :method "post"}
-   ])
+
+
+(rum/defc article-form [ctx]
+  [:form {:action "/api/articles" :method "post"}
+   [:fieldset
+    [:p
+     [:label {:for "name"} "Title"]
+     [:input {:type "text" :name "title"}]]
+
+    [:p
+     [:label {:for "content"} "Content"]
+     [:textarea {:name "content"}]]
+
+    [:button "Save"]
+    ]])
 
 
 (rum/defc article-table [articles]

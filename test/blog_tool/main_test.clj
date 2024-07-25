@@ -20,3 +20,14 @@
        {:status 200
         :body "pong"}
        (test-request :uri "/"))))
+
+
+(deftest test-article-create
+
+  (is (match?
+       {:status 500
+        :body ""}
+
+       (test-request :uri "/api/articles"
+                     :method :post
+                     :params {}))))

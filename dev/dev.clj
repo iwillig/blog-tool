@@ -1,6 +1,7 @@
 (ns dev
   (:require
    [kaocha.repl :as k]
+   [blog-tool.routes :as routes]
    [clj-commons.pretty.repl :as pretty-repl]
    [clj-reload.core :as reload]))
 
