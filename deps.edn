@@ -25,7 +25,9 @@
   com.github.seancorfield/honeysql   {:mvn/version "2.6.1147"}
 
   ring/ring-mock                     {:mvn/version "0.4.0"}
+  ring/ring-devel                    {:mvn/version "1.12.2"}
   ring/ring-json                     {:mvn/version "0.5.1"}
+  ring/ring                          {:mvn/version "1.12.2"}
 
   org.slf4j/slf4j-simple             {:mvn/version "2.0.13"}
   org.jsoup/jsoup                    {:mvn/version "1.18.1"}

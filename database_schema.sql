@@ -3,6 +3,15 @@ PRAGMA foreign_keys = ON;
 select load_extension('./uuid');
 select load_extension('./closure');
 
+create table if not exists tag (
+       id integer primary key,
+       created_at datetime default (datetime('now')) not null,
+       last_updated_at datetime default (datetime('now')) not null,
+       public_id uuid unique default (uuid()) not null,
+       slug text unique,
+       name text
+);
+
 
 create table if not exists author (
        id integer primary key,
@@ -23,6 +32,13 @@ create table if not exists post (
        author_id integer references author
 );
 
+create table if not exists post_tag (
+       id integer primary key asc,
+       post_id integer references post,
+       tag_id integer references tag
+);
+
+
 create table if not exists comment (
        id integer primary key asc,
        created_at datetime default (datetime('now')) not null,
@@ -33,6 +49,8 @@ create table if not exists comment (
        parent_id integer references comment,
        author_id integer references author
 );
+
+
 
 create index comment_idx1 on comment(parent_id);
 

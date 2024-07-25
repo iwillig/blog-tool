@@ -5,7 +5,7 @@
 
 (def db {:dbtype "sqlite" :dbname "database.db"})
 
-(defonce data-source (jdbc/get-datasource db))
+(def data-source (jdbc/get-datasource db))
 
 
 (defn execute!
@@ -14,6 +14,15 @@
     (jdbc/execute! data-source
                    sql-string)))
 
+(defn find-tags
+  [])
+
+(defn find-posts
+  [])
+
+(defn find-comments
+  [])
+
 
 (comment
 
@@ -21,5 +30,11 @@
    data-source
    {:select [:*]
     :from   [:comment]})
+
+
+  (execute!
+   data-source
+   {:select [:*]
+    :from   [:post]})
 
   )
