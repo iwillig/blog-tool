@@ -22,7 +22,7 @@ create table if not exists author (
        author_email text unique
 );
 
-create table if not exists post (
+create table if not exists article (
        id integer primary key asc,
        created_at datetime default (datetime('now')) not null,
        last_updated_at datetime default (datetime('now')) not null,
@@ -32,25 +32,28 @@ create table if not exists post (
        author_id integer references author
 );
 
-create table if not exists post_tag (
+create table if not exists article_tag (
        id integer primary key asc,
-       post_id integer references post,
+       article_id integer references post,
        tag_id integer references tag
 );
 
 
 create table if not exists comment (
+
        id integer primary key asc,
        created_at datetime default (datetime('now')) not null,
        last_updated_at datetime default (datetime('now')) not null,
        public_id uuid unique default (uuid()) not null,
+
        content text,
-       post_id integer references post,
+       article_id integer references post,
        parent_id integer references comment,
        author_id integer references author
 );
 
 
+-- TODO Full text
 
 create index comment_idx1 on comment(parent_id);
 

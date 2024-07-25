@@ -29,7 +29,7 @@
                    [:script {:src "https://unpkg.com/htmx.org@2.0.1"}]]
                   [:body [:div [:h1 "blog tools"]]]]))))
 
-(def posts
+(def articles
   (liberator/resource
    :allowed-methods [:post :get]
    :available-media-types available-media-type
@@ -43,7 +43,7 @@
    :handle-created (fn [ctx] "created-post")
    :handle-ok (fn [ctx] "list-post")))
 
-(def post
+(def article
   (liberator/resource
 
    :allowed-methods [:get :patch :delete]
@@ -80,13 +80,11 @@
    ["/admin"              {:name :admin :handler admin}]
 
 
-   ["/api/posts"          {:name :posts :handler posts}]
-   ["/api/posts/:post-id" {:name :post  :handler post}]
+   ["/api/article"          {:name :posts :handler articles}]
+   ["/api/article/:article-id" {:name :post  :handler article}]
 
    ["/api/comments"             {:name :comments :handler comments}]
-   ["/api/comments/:comment-id" {:name :comment :handler comment}]
-
-   ])
+   ["/api/comments/:comment-id" {:name :comment :handler comment}]])
 
 (defn router
   []
