@@ -7,7 +7,8 @@
    [ring.middleware.reload :refer [wrap-reload]]
    [rum.core :as rum]
    [reitit.ring :as ring]
-   [liberator.core :as liberator]))
+   [liberator.core :as liberator])
+  (:import (java.net URL)))
 
 (def available-media-type
   ["text/html"])
@@ -24,12 +25,10 @@
    :available-media-types available-media-type
    :handle-ok (fn [ctx]
                 (rum/render-static-markup
-                 [:html {:lang "en"}
-                  [:head
-                   [:script {:src "https://unpkg.com/htmx.org@2.0.1"}]]
-                  [:body
-                   [:div [:h1 "blog tools"]
-                    (templates/article-form ctx)]]]))))
+                 (templates/layout
+                  ctx
+                  templates/article-form)))))
+
 
 (def articles
   (liberator/resource
@@ -40,11 +39,17 @@
    ;;               false)
 
    :post! (fn [ctx]
-
+            (println)
+            (clojure.pprint/pprint (get-in ctx [:request :params]))
+            (println)
             {})
 
    :handle-created (fn [ctx]
                      "created-post")
+   :post-redirect? true
+
+   :location (fn [ctx]
+               (URL. "http://localhost:3000/admin"))
 
    :handle-ok (fn [ctx]
                 "list-post")))

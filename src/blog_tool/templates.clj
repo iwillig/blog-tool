@@ -11,6 +11,21 @@
   [:a {:href ""}])
 
 
+(rum/defc layout [ctx content]
+  [:html {:lang "en"}
+   [:head
+    [:link
+     {:rel "stylesheet"
+      :href "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"}]
+    [:script {:src "https://unpkg.com/htmx.org@2.0.1"}]]
+
+   [:body
+    [:div..container
+     [:div [:h1 "Blog Tool"]
+      (content ctx)]]]])
+
+
+
 
 (rum/defc article-form [ctx]
   [:form {:action "/api/articles" :method "post"}
@@ -23,8 +38,7 @@
      [:label {:for "content"} "Content"]
      [:textarea {:name "content"}]]
 
-    [:button "Save"]
-    ]])
+    [:button "Save"]]])
 
 
 (rum/defc article-table [articles]

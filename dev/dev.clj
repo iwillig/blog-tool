@@ -13,12 +13,10 @@
 
 (comment
 
+  (routes/run-dev)
+
   (reload/reload)
   ;; Re compile clojure
 
   ;; Run the main test
-  (k/run 'test.namespace)
-
-
-
-  )
+  (k/run 'test.namespace))
