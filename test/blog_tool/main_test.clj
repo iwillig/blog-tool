@@ -24,10 +24,14 @@
 
 (deftest test-article-create
 
+
   (is (match?
-       {:status 500
+       {:status 303
         :body ""}
 
-       (test-request :uri "/api/articles"
-                     :method :post
-                     :params {}))))
+
+       (test-request
+        :uri "/api/articles"
+        :method :post
+        :params {:title "How to blog"
+                 :content "# first section"}))))

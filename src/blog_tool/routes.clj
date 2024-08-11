@@ -1,6 +1,7 @@
 (ns blog-tool.routes
   (:require
    [blog-tool.templates :as templates]
+   [blog-tool.rest-resources :as resources]
    [ring.middleware.json :as json]
    [ring.adapter.jetty :refer [run-jetty]]
    [ring.middleware.params :as ring.params]
@@ -10,92 +11,22 @@
    [liberator.core :as liberator])
   (:import (java.net URL)))
 
-(def available-media-type
-  ["text/html"])
-
-(def index
-  (liberator/resource
-   :available-media-types available-media-type
-   :handle-ok (fn [_request]
-                (rum/render-static-markup
-                 (templates/my-comp "hello")))))
-
-(def admin
-  (liberator/resource
-   :available-media-types available-media-type
-   :handle-ok (fn [ctx]
-                (rum/render-static-markup
-                 (templates/layout
-                  ctx
-                  templates/article-form)))))
-
-
-(def articles
-  (liberator/resource
-   :allowed-methods [:post :get]
-   :available-media-types available-media-type
-
-   ;; :malformed? (fn [_ctx]
-   ;;               false)
-
-   :post! (fn [ctx]
-            (println)
-            (clojure.pprint/pprint (get-in ctx [:request :params]))
-            (println)
-            {})
-
-   :handle-created (fn [ctx]
-                     "created-post")
-   :post-redirect? true
-
-   :location (fn [ctx]
-               (URL. "http://localhost:3000/admin"))
-
-   :handle-ok (fn [ctx]
-                "list-post")))
-
-(def article
-  (liberator/resource
-
-   :allowed-methods [:get :patch :delete]
-
-   :respond-with-entity? true
-   :can-put-to-missing? false
-
-   :available-media-types available-media-type
-
-   :patch-content-types available-media-type
-
-   :malformed? (fn [_ctx]
-                 false)
-
-   :exists? (fn [ctx]
-              [true ctx])
-
-   :handle-not-found (fn [_] "not-found")
-
-   :patch! (fn [ctx]
-             ctx)
-
-   :handle-ok "post"
-
-   ))
-
-(def comments nil)
-
-(def comment nil)
-
-
 (defn routes
   []
-  [["/"                   {:name :index :handler index}]
-   ["/admin"              {:name :admin :handler admin}]
+  [["/"                   {:name :index
+                           :handler resources/index-resource}]
+   ["/admin"              {:name :admin
+                           :handler resources/admin-resource}]
 
-   ["/api/articles"             {:name :posts :handler articles}]
-   ["/api/articles/:article-id" {:name :post  :handler article}]
+   ["/api/articles"             {:name :posts
+                                 :handler resources/articles-resource}]
+   ["/api/articles/:article-id" {:name :post
+                                 :handler resources/article-resource}]
 
-   ["/api/comments"             {:name :comments :handler comments}]
-   ["/api/comments/:comment-id" {:name :comment :handler comment}]])
+   ["/api/comments"             {:name :comments
+                                 :handler resources/comments-resource}]
+   ["/api/comments/:comment-id" {:name :comment
+                                 :handler resources/comment-resource}]])
 
 (defn router
   []
