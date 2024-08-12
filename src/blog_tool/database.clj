@@ -7,7 +7,6 @@
 
 (def data-source (jdbc/get-datasource db))
 
-
 (defn execute!
   [data-source sql-map]
   (let [sql-string (sql/format sql-map)]
@@ -23,7 +22,6 @@
 (defn find-comments
   [])
 
-
 (comment
 
   (execute!
@@ -31,10 +29,7 @@
    {:select [:*]
     :from   [:comment]})
 
-
   (execute!
    data-source
    {:select [:*]
-    :from   [:post]})
-
-  )
+    :from   [:post]}))

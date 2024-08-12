@@ -1,6 +1,8 @@
 {:deps
  {org.clojure/clojure                {:mvn/version "1.11.3"}
   org.clj-commons/pretty             {:mvn/version "3.0.0"}
+  integrant/integrant                {:mvn/version "0.10.0"}
+  integrant/repl                     {:mvn/version "0.3.3"}
 
   lambdaisland/kaocha                {:mvn/version "1.91.1392"}
   io.github.tonsky/clj-reload        {:mvn/version "0.7.1"}
