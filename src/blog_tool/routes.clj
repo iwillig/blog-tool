@@ -38,9 +38,3 @@
        (ring/create-default-handler))
       (ring.params/wrap-params)
       (json/wrap-json-body {:keywords? true})))
-
-(defn run-dev [& _args]
-  (run-jetty
-
-   (wrap-reload #'app)
-   {:port 3000}))

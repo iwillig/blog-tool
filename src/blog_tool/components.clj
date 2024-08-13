@@ -18,7 +18,9 @@
 
 (defmethod ig/init-key ::http-handler
   [_ {:as config}]
-  (jetty/run-jetty bt.routes/app config))
+  (jetty/run-jetty
+   bt.routes/app
+   config))
 
 (defmethod ig/halt-key! ::http-handler
   [_ server]

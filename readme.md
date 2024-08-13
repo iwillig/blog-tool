@@ -19,6 +19,17 @@ dev> (reload/reload)
 dev> (k/run-all)
 ```
 
+## Run server locally via REPL
+
+```clojure
+dev> (go)
+```
+
+The server starts locally on port 3000.
+
+http://localhost:3000/
+
+
 ## Tests
 Run the tests via the command line.
 
